@@ -10,13 +10,14 @@ const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
 const tries = document.getElementsByClassName("start")[0];
 const spanCount = document.createElement("span");
+const displayResult = document.getElementById("alert");
 
 tries.appendChild(spanCount)
 
 let letterToCompare;
 let count = 0;
 let countWin = 0;
-let countLose = 0;
+// let countLose = 0;
 
 // affiche l'emplacement du mot a trouvé en cachant le mot
 function displayLocation() {
@@ -47,6 +48,14 @@ function compare() {
         if (motAlea[i] === letterToCompare) {
             const letterSpan = showLetter.getElementsByTagName("span")[i];
             letterSpan.classList.add("letter-ok");
+            countWin++;
+            console.log(countWin, "countWin");
+            if (countWin === motAlea.length) {
+                console.log("gagné");
+                const winner = document.createElement("h1");
+                winner.textContent = "Vous avez gagné!!!🎉"
+                displayResult.appendChild(winner);
+            }
         }
     }
 }
@@ -54,22 +63,11 @@ function compare() {
 // affiché nb d'essai
 function displayTries(event) {
     count++;
-    spanCount.textContent = `${count}`;
+    spanCount.textContent = `${count}`;    
 }
-
-//défini si gagné ou perdu
-// function defineWinner() {
-
-// }
-
-
-
-
 
 fieldText.addEventListener("click", pickLetter);
 
 /** 
- * compteru essai, affiché nombre d'essai
- * compteur win +1 a chaque click ok, si comteur win = motAlea.length Win!
  * compteur + 1 a chaque erreur --> nb erreur 9 max => Lose!
  */
