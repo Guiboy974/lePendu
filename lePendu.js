@@ -8,47 +8,68 @@ console.log(motAlea);
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
-const tries = document.getElementById("try_list");
-let letterToCompare;
+const tries = document.getElementsByClassName("start")[0];
+const spanCount = document.createElement("span");
 
-// récupère la lettre cliquer
-function pickLetter(event) {
-    if (event.target.tagName === "P") {
-        letterToCompare = event.target.textContent;
-    }
-}
+tries.appendChild(spanCount)
+
+let letterToCompare;
+let count = 0;
+let countWin = 0;
+let countLose = 0;
 
 // affiche l'emplacement du mot a trouvé en cachant le mot
 function displayLocation() {
     for (let i = 0; i < motAlea.length; i++) {
         const letterSpan = document.createElement("span");
+        showLetter.appendChild(letterSpan)
         letterSpan.textContent = motAlea[i]
         letterSpan.classList.add("letter-span");
-        showLetter.appendChild(letterSpan)
     }
 }
 displayLocation();
 
+// récupère la lettre cliquer
+function pickLetter(event) {
+    if (event.target.tagName === "P") {
+        if (event.target.className === "lettre" && event.target.className !== "letter-disabled") {
+            letterToCompare = event.target.textContent;
+            event.target.classList.add("letter-disabled");
+            compare();
+            displayTries(event);
+        }
+    }
+}
+
 // compare la lettre cliquer au mot a trouver et l'affiche
 function compare() {
     for (let i = 0; i < motAlea.length; i++) {
-        if (motAlea[i] == letterToCompare) {
-            console.log(motAlea[i]);
-            const letterSpan = showLetter.getElementsByTagName("span")[i]
+        if (motAlea[i] === letterToCompare) {
+            const letterSpan = showLetter.getElementsByTagName("span")[i];
             letterSpan.classList.add("letter-ok");
         }
     }
 }
 
-fieldText.addEventListener("click", pickLetter)
-fieldText.addEventListener("click", compare)
+// affiché nb d'essai
+function displayTries(event) {
+    count++;
+    spanCount.textContent = `${count}`;
+}
+
+//défini si gagné ou perdu
+// function defineWinner() {
+
+// }
 
 
-/** comparer si present dans le mot choisi ou pas
- * inclu : affiché la lettre aux bons index
- * non inclus : ne rien faire
- * disabled les lettre deja choisi
- * compteur +1 a chaque click, affiché nombre d'essai, compteur max = 20
- * nb erreur 10 max
- * si mot complet fin du jeu gagné sinon perdu
+
+
+
+fieldText.addEventListener("click", pickLetter);
+
+/** 
+ * compteru essai, affiché nombre d'essai
+ * compteur win +1 a chaque click ok, si comteur win = motAlea.length Win!
+ * compteur + 1 a chaque erreur --> nb erreur 9 max => Lose!
  */
