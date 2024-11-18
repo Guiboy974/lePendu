@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Pendu</title>
+    <script type="module" src="lePendu.js"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Roboto, sans-erif;
+            font-size: 1em;
+        }
+
+        .box {
+            display: block;
+            box-sizing: border-box;
+            padding: 5px;
+            margin: 0 auto;
+            max-width: 600px;
+            border-radius: 5px;
+            background: lightgrey;
+        }
+
+        .rules {
+            margin: 5px auto;
+        }
+
+        .alert {
+            font-style: italic;
+        }
+
+        .try_show {
+            font-size: 2em;
+            margin: 15px auto;
+        }
+
+        input {
+            border: 0;
+            border-radius: 3px;
+            padding: 10px;
+            display: block;
+            margin: 10px auto;
+            font-size: 1.5em;
+        }
+
+        .send:hover {
+            cursor: pointer;
+        }
+
+        .prompt {
+            width: 50px;
+            text-align: center;
+            border: 1px solid white;
+            box-sizing: border-box;
+        }
+
+        .prompt:hover {
+            border: 1px solid grey;
+        }
+
+        .prompt:focus {
+            border: 1px solid blue;
+            outline: 0;
+        }
+
+        .promptLarge {
+            width: 50%;
+            max-width: 200px;
+        }
+
+        .send {
+            background: green;
+            color: white;
+            font-size: 1.3em;
+            transition: .2s ease-in;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .send:hover {
+            transform: scale(.9);
+        }
+
+        .try_list {
+            display: block;
+            max-width: 600px;
+            padding-left: 0;
+            margin: 15px auto;
+        }
+
+        li {
+            display: block;
+            float: left;
+            min-width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin: 5px;
+            padding: 0 7px;
+            background: grey;
+            color: white;
+            border-radius: 2px;
+            box-sizing: border-box;
+        }
+
+        .start {
+            background: skyblue;
+            color: white;
+            width: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Trouvez le mot mystère</h1>
+    <div class="box">
+        <p class="rules">Une lettre à la fois et pas d'accents. </p>
+        <p class="rules">Le thème est <em>Développement Web</em></p>
+
+        <div class="alert" id="alert"></div>
+
+        <p class="try_show" id="try_show">Ce jeu nécessite JavaScript</p>
+
+        <form id="form" action="#">
+            <input class="prompt" id="prompt" type="text" />
+            <input class="send" id="send" type="submit" />
+            <input class="send hidden" id="restart" value="Recommencer" type="submit" />
+        </form>
+    </div>
+
+    <ul class="try_list" id="try_list">
+        <li class="start">Vos essais &gt;</li>
+    </ul>
+
+</body>
+
+</html>
