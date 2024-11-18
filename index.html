@@ -113,6 +113,26 @@
         .hidden {
             display: none;
         }
+
+        .alphaB {
+            margin: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .lettre {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 3px
+        }
+
+        .letter-span {
+            margin: 3px;
+            text-decoration: underline black;
+            font-size: 1.5em;
+            color: transparent;
+        }
+
     </style>
 </head>
 
@@ -124,13 +144,36 @@
 
         <div class="alert" id="alert"></div>
 
-        <p class="try_show" id="try_show">Ce jeu nécessite JavaScript</p>
+        <p class="try_show" id="try_show"></p>
 
-        <form id="form" action="#">
-            <input class="prompt" id="prompt" type="text" />
-            <input class="send" id="send" type="submit" />
-            <input class="send hidden" id="restart" value="Recommencer" type="submit" />
-        </form>
+        <fieldset class="alphaB" id="alphabet">
+            <p class="lettre">A</p>
+            <p class="lettre">B</p>
+            <p class="lettre">C</p>
+            <p class="lettre">D</p>
+            <p class="lettre">E</p>
+            <p class="lettre">F</p>
+            <p class="lettre">G</p>
+            <p class="lettre">H</p>
+            <p class="lettre">I</p>
+            <p class="lettre">J</p>
+            <p class="lettre">K</p>
+            <p class="lettre">L</p>
+            <p class="lettre">M</p>
+            <p class="lettre">N</p>
+            <p class="lettre">O</p>
+            <p class="lettre">P</p>
+            <p class="lettre">Q</p>
+            <p class="lettre">R</p>
+            <p class="lettre">S</p>
+            <p class="lettre">T</p>
+            <p class="lettre">U</p>
+            <p class="lettre">V</p>
+            <p class="lettre">W</p>
+            <p class="lettre">X</p>
+            <p class="lettre">Y</p>
+            <p class="lettre">Z</p>
+        </fieldset>
     </div>
 
     <ul class="try_list" id="try_list">
