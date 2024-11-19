@@ -1,20 +1,18 @@
 "use strict"
 
-const tabMot = ["DEVELOPPEUR", "INTEGRATEUR", "CLIENT", "SERVEURS", "JAVASCRIPT", "REACTJS", "SYMFONY", "MYSQL", "BOOTSTRAP", "NAVIGATEUR", "INTERNET", "FRAMEWORK", "TAILWIND", "MOZILLA", "CHROME", "FREELANCE", "CONCEPTEUR", "APPLICATION", "MERISE", "HTML", "STYLE", "TERMINAL", "ANGULAR","GITHUB","GITLAB","DOCKER","INFORMATIQUE","SVELTE",];
+import { tabMot } from "./tab.js";
 
 // génère un mot aleatoire a partir du tableau
 function newAlea(tab) {
     return tab[Math.floor(Math.random() * tab.length)];
 }
 let newMot = newAlea(tabMot);
-console.log(newMot);
 
 // fetch("https://trouve-mot.fr/api/random")
 //     .then((response) => response.json())
 //     .then((words) => { 
 //         newMot = words.name;
 //         console.log(words);
-        
 //         displayLocation(newMot);
 //      });
 
