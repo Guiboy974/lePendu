@@ -3,21 +3,35 @@
 const tabMot = ["DEVELOPPEUR", "INTEGRATEUR", "CLIENT", "SERVEURS", "JAVASCRIPT", "REACTJS", "SYMFONY", "MYSQL", "BOOTSTRAP", "NAVIGATEUR", "INTERNET", "FRAMEWORK", "TAILWIND", "MOZILLA", "CHROME", "FREELANCE", "CONCEPTEUR", "APPLICATION", "MERISE", "HTML", "STYLE", "TERMINAL"];
 
 // génère un mot aleatoire a partir du tableau
-const motAlea = tabMot[Math.floor(Math.random() * tabMot.length)];
-console.log(motAlea);
+function newAlea(tab) {
+    return tab[Math.floor(Math.random() * tab.length)];
+}
+let newMot = newAlea(tabMot);
+console.log(newMot);
+
+
+// fetch("https://trouve-mot.fr/api/random")
+//     .then((response) => response.json())
+//     .then((words) => { 
+//         newMot = words.name;
+//         console.log(words);
+        
+//         displayLocation(newMot);
+//      });
+
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
 const tries = document.getElementsByClassName("start")[0];
 const displayResult = document.getElementById("alert");
 const essaiList = document.getElementById("try_list");
-const liError = document.createElement("li");
+const liError = document.getElementsByClassName("li-error")[0];
+const liRestart = document.getElementsByClassName("start-again")[0];
 const spanCount = document.createElement("span");
 const spanCountError = document.createElement("span");
-liError.textContent = "Nombre d'erreurs : "
+
 
 tries.appendChild(spanCount);
-essaiList.appendChild(liError);
 liError.appendChild(spanCountError);
 
 let letterToCompare;
@@ -27,10 +41,11 @@ let countLose = 0;
 
 // affiche l'emplacement du mot a trouvé en cachant le mot
 function displayLocation() {
-    for (let i = 0; i < motAlea.length; i++) {
+    showLetter.innerHTML = "";
+    for (let i = 0; i < newMot.length; i++) {
         const letterSpan = document.createElement("span");
-        showLetter.appendChild(letterSpan)
-        letterSpan.textContent = motAlea[i]
+        showLetter.appendChild(letterSpan);
+        letterSpan.textContent = newMot[i];
         letterSpan.classList.add("letter-span");
     }
 }
@@ -51,51 +66,53 @@ function pickLetter(event) {
 // compare la lettre cliquer au mot a trouver et l'affiche
 function compare() {
     let letterFound = false
-    for (let i = 0; i < motAlea.length; i++) {
-        if (motAlea[i] === letterToCompare) {
+    for (let i = 0; i < newMot.length; i++) {
+        if (newMot[i] === letterToCompare) {
             const letterSpan = showLetter.getElementsByTagName("span")[i];
             letterSpan.classList.add("letter-ok");
             countWin++;
             letterFound = true;
-            if (countWin === motAlea.length) {
-                console.log("gagné");
+            if (countWin === newMot.length) {
                 const winner = document.createElement("h1");
                 winner.textContent = "Vous avez gagné!!!🎉"
                 displayResult.appendChild(winner);
                 fieldText.removeEventListener("click", pickLetter);
-                startAgain();
             }
         }
     }
-    if (letterFound === false){
+    if (letterFound === false) {
         countLose++;
-        spanCountError.textContent = `${countLose}`; 
-        if(countLose > 8){
+        spanCountError.textContent = `${countLose}`;
+        if (countLose > 8) {
             const loser = document.createElement("h1");
-                loser.textContent = "Vous avez perdu... ☠"
-                displayResult.appendChild(loser);
-                fieldText.removeEventListener("click", pickLetter)
-                startAgain();
+            loser.textContent = "Vous avez perdu... ☠"
+            displayResult.appendChild(loser);
+            fieldText.removeEventListener("click", pickLetter)
         }
     }
 }
 
 // affiché nb d'essai
-function displayTries(event) {
+function displayTries() {
     count++;
-    spanCount.textContent = `${count}`;    
+    spanCount.textContent = `${count}`;
 }
 
 //actualiser la page 
-function startAgain() {
-    const newList = document.createElement("li")
-    newList.textContent = "Recommencer";
-    essaiList.appendChild(newList)
-    newList.addEventListener("click", () =>{
-        motAlea;
-        displayLocation();
-    })
+function startAgain(newMot) {
+    return location.reload()
 }
 
+// function delClass(){
+//     const letter = document.querySelectorAll(".lettre");
+//     if (letter.className === "letter-disabled" || letter.className === "lettre"){
+//         letter.classList.remove("letter-disabled");
+//         fieldText.addEventListener("click", pickLetter);
+//     }
+// }
+
+
 fieldText.addEventListener("click", pickLetter);
+liRestart.addEventListener("click", startAgain);
+// liRestart.addEventListener("click", delClass);
 
