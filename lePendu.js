@@ -1,6 +1,7 @@
 "use strict"
 
-import { tabMot } from "./tab.js";
+// import { tabMot } from "./tab.js";
+const tabMot = ["DEVELOPPEUR", "INTEGRATEUR", "CLIENT", "SERVEURS", "JAVASCRIPT", "REACTJS", "SYMFONY", "MYSQL", "BOOTSTRAP", "NAVIGATEUR", "INTERNET", "FRAMEWORK", "TAILWIND", "MOZILLA", "CHROME", "FREELANCE", "CONCEPTEUR", "APPLICATION", "MERISE", "HTML", "STYLE", "TERMINAL", "ANGULAR","GITHUB","GITLAB","DOCKER","INFORMATIQUE","SVELTE",];
 
 // génère un mot aleatoire a partir du tableau
 function newAlea(tab) {
