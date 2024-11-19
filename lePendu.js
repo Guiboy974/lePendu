@@ -9,7 +9,6 @@ function newAlea(tab) {
 let newMot = newAlea(tabMot);
 console.log(newMot);
 
-
 // fetch("https://trouve-mot.fr/api/random")
 //     .then((response) => response.json())
 //     .then((words) => { 
@@ -18,7 +17,6 @@ console.log(newMot);
         
 //         displayLocation(newMot);
 //      });
-
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
@@ -103,16 +101,5 @@ function startAgain(newMot) {
     return location.reload()
 }
 
-// function delClass(){
-//     const letter = document.querySelectorAll(".lettre");
-//     if (letter.className === "letter-disabled" || letter.className === "lettre"){
-//         letter.classList.remove("letter-disabled");
-//         fieldText.addEventListener("click", pickLetter);
-//     }
-// }
-
-
 fieldText.addEventListener("click", pickLetter);
 liRestart.addEventListener("click", startAgain);
-// liRestart.addEventListener("click", delClass);
-
