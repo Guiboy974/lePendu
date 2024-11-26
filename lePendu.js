@@ -15,7 +15,7 @@ xhr.onreadystatechange = (event) => {
         try {
             const data = JSON.parse(xhr.responseText);
             for (let i = 0; i < data.length; i++) {
-                newMot = data[i].name;
+                newMot = data[i].name.toUpperCase();
             }
             displayLocation();
         } catch (error){
@@ -53,7 +53,7 @@ function displayLocation() {
     for (let i = 0; i < newMot.length; i++) {
         const letterSpan = document.createElement("span");
         showLetter.appendChild(letterSpan);
-        letterSpan.textContent = "...";
+        letterSpan.textContent = newMot[i];
         letterSpan.classList.add("letter-span");
     }
 }
@@ -96,6 +96,7 @@ function compare() {
             loser.textContent = "Vous avez perdu... ☠"
             displayResult.appendChild(loser);
             fieldText.removeEventListener("click", pickLetter)
+            
         }
     }
 }
