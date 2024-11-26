@@ -8,25 +8,24 @@
 // }
 
 let newMot;
+let categories = [];
 
+// api génération mot alétaoire
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = (event) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
         try {
             const data = JSON.parse(xhr.responseText);
-            for (let i = 0; i < data.length; i++) {
-                newMot = data[i].name.toUpperCase();
-            }
-            displayLocation();
-        } catch (error){
+            sortCategorie(data)
+            genererOption()
+            // displayLocation();
+        } catch (error) {
             console.error("erreur, mot non récupérer")
         }
     }
-}
-
-xhr.open("GET", "https://trouve-mot.fr/api/random", true);
-
-xhr.send(null)
+};
+xhr.open("GET", "https://trouve-mot.fr/api/random/50", true);
+xhr.send(null);
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
@@ -37,6 +36,8 @@ const liError = document.getElementsByClassName("li-error")[0];
 const liRestart = document.getElementsByClassName("start-again")[0];
 const spanCount = document.createElement("span");
 const spanCountError = document.createElement("span");
+const selectCategorie = document.getElementById("select")
+
 
 
 tries.appendChild(spanCount);
@@ -96,7 +97,7 @@ function compare() {
             loser.textContent = "Vous avez perdu... ☠"
             displayResult.appendChild(loser);
             fieldText.removeEventListener("click", pickLetter)
-            
+
         }
     }
 }
@@ -111,6 +112,26 @@ function displayTries() {
 function startAgain(newMot) {
     return location.reload()
 }
+
+// génère nouveau tableau pour les catégories
+function sortCategorie(data) {
+    for (let i = 0; i < data.length; i++) {
+        if (categories.includes(data[i].categorie) === false) {
+            categories.push(data[i].categorie);
+        }
+    }
+}
+
+// creer les option de selection des catégorie
+function genererOption(){
+    for (let i = 0; i < categories.length; i++) {
+        const option = document.createElement("option");
+        option.textContent = categories[i]
+        option.setAttribute("value", categories[i])
+        selectCategorie.appendChild(option);
+    }
+}
+
 
 fieldText.addEventListener("click", pickLetter);
 liRestart.addEventListener("click", startAgain);
