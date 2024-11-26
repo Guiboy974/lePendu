@@ -1,20 +1,33 @@
 "use strict"
 
-const tabMot = ["DEVELOPPEUR", "INTEGRATEUR", "CLIENT", "SERVEURS", "JAVASCRIPT", "REACTJS", "SYMFONY", "MYSQL", "BOOTSTRAP", "NAVIGATEUR", "INTERNET", "FRAMEWORK", "TAILWIND", "MOZILLA", "CHROME", "FREELANCE", "CONCEPTEUR", "APPLICATION", "MERISE", "HTML", "STYLE", "TERMINAL", "ANGULAR","GITHUB","GITLAB","DOCKER","INFORMATIQUE","SVELTE",];
+// const tabMot = ["DEVELOPPEUR", "INTEGRATEUR", "CLIENT", "SERVEURS", "JAVASCRIPT", "REACTJS", "SYMFONY", "MYSQL", "BOOTSTRAP", "NAVIGATEUR", "INTERNET", "FRAMEWORK", "TAILWIND", "MOZILLA", "CHROME", "FREELANCE", "CONCEPTEUR", "APPLICATION", "MERISE", "HTML", "STYLE", "TERMINAL", "ANGULAR","GITHUB","GITLAB","DOCKER","INFORMATIQUE","SVELTE",];
 
-// génère un mot aleatoire a partir du tableau
-function newAlea(tab) {
-    return tab[Math.floor(Math.random() * tab.length)];
+// // génère un mot aleatoire a partir du tableau
+// function newAlea(tab) {
+//     return tab[Math.floor(Math.random() * tab.length)];
+// }
+
+let newMot;
+
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = (event) => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+            const data = JSON.parse(xhr.responseText);
+            for (let i = 0; i < data.length; i++) {
+                newMot = data[i].name;
+                console.log(data, newMot);
+            }
+            displayLocation();
+        } catch (error){
+            console.error("erreur, mot non récupérer")
+        }
+    }
 }
-let newMot = newAlea(tabMot);
 
-// fetch("https://trouve-mot.fr/api/random")
-//     .then((response) => response.json())
-//     .then((words) => { 
-//         newMot = words.name;
-//         console.log(words);
-//         displayLocation(newMot);
-//      });
+xhr.open("GET", "https://trouve-mot.fr/api/random", true);
+
+xhr.send(null)
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
@@ -41,11 +54,11 @@ function displayLocation() {
     for (let i = 0; i < newMot.length; i++) {
         const letterSpan = document.createElement("span");
         showLetter.appendChild(letterSpan);
-        letterSpan.textContent = newMot[i];
+        letterSpan.textContent = "...";
         letterSpan.classList.add("letter-span");
     }
 }
-displayLocation();
+
 
 // récupère la lettre cliquer
 function pickLetter(event) {
