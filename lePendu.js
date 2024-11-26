@@ -16,7 +16,6 @@ xhr.onreadystatechange = (event) => {
             const data = JSON.parse(xhr.responseText);
             for (let i = 0; i < data.length; i++) {
                 newMot = data[i].name;
-                console.log(data, newMot);
             }
             displayLocation();
         } catch (error){
