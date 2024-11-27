@@ -16,11 +16,13 @@ xhr.onreadystatechange = (event) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
         try {
             const data = JSON.parse(xhr.responseText);
-            sortCategorie(data)
-            genererOption()
-            // displayLocation();
+            sortCategorie(data);
+            selectCategorie.addEventListener("change", (event) => {
+                selectCat(event, data)
+                displayLocation();
+            });
         } catch (error) {
-            console.error("erreur, mot non récupérer")
+            console.error("erreur, mot non récupérer", error)
         }
     }
 };
@@ -69,6 +71,14 @@ function pickLetter(event) {
             compare();
             displayTries(event);
         }
+    }
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+        letterToCompare = event.key.toUpperCase()
+        compare();
+        displayTries(event);
+    }
+    for (let i = 0; i < selectCategorie.length; i++) {
+        selectCategorie.setAttribute("disabled", true)
     }
 }
 
@@ -120,18 +130,30 @@ function sortCategorie(data) {
             categories.push(data[i].categorie);
         }
     }
+    genererOption();
 }
 
 // creer les option de selection des catégorie
-function genererOption(){
+function genererOption() {
     for (let i = 0; i < categories.length; i++) {
         const option = document.createElement("option");
         option.textContent = categories[i]
         option.setAttribute("value", categories[i])
         selectCategorie.appendChild(option);
     }
+
 }
 
+// selectionne la categorie et genere le mot en fonction
+function selectCat(event, data) {
+    for (let i = 0; i < data.length; i++) {
+        if (event.target.value === data[i].categorie) {
+            let motNormalize = data[i].name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            newMot = motNormalize.toUpperCase()
+        }
+    }
+}
 
+document.addEventListener("keydown", pickLetter)
 fieldText.addEventListener("click", pickLetter);
 liRestart.addEventListener("click", startAgain);
