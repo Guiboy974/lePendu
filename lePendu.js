@@ -8,25 +8,26 @@
 // }
 
 let newMot;
+let categories = [];
 
+// api génération mot alétaoire
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = (event) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
         try {
             const data = JSON.parse(xhr.responseText);
-            for (let i = 0; i < data.length; i++) {
-                newMot = data[i].name.toUpperCase();
-            }
-            displayLocation();
-        } catch (error){
-            console.error("erreur, mot non récupérer")
+            sortCategorie(data);
+            selectCategorie.addEventListener("change", (event) => {
+                selectCat(event, data)
+                displayLocation();
+            });
+        } catch (error) {
+            console.error("erreur, mot non récupérer", error)
         }
     }
-}
-
-xhr.open("GET", "https://trouve-mot.fr/api/random", true);
-
-xhr.send(null)
+};
+xhr.open("GET", "https://trouve-mot.fr/api/random/50", true);
+xhr.send(null);
 
 const fieldText = document.getElementById("alphabet")
 const showLetter = document.getElementById("try_show");
@@ -37,6 +38,8 @@ const liError = document.getElementsByClassName("li-error")[0];
 const liRestart = document.getElementsByClassName("start-again")[0];
 const spanCount = document.createElement("span");
 const spanCountError = document.createElement("span");
+const selectCategorie = document.getElementById("select")
+
 
 
 tries.appendChild(spanCount);
@@ -69,6 +72,14 @@ function pickLetter(event) {
             displayTries(event);
         }
     }
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+        letterToCompare = event.key.toUpperCase()
+        compare();
+        displayTries(event);
+    }
+    for (let i = 0; i < selectCategorie.length; i++) {
+        selectCategorie.setAttribute("disabled", true)
+    }
 }
 
 // compare la lettre cliquer au mot a trouver et l'affiche
@@ -96,7 +107,7 @@ function compare() {
             loser.textContent = "Vous avez perdu... ☠"
             displayResult.appendChild(loser);
             fieldText.removeEventListener("click", pickLetter)
-            
+
         }
     }
 }
@@ -112,5 +123,37 @@ function startAgain(newMot) {
     return location.reload()
 }
 
+// génère nouveau tableau pour les catégories
+function sortCategorie(data) {
+    for (let i = 0; i < data.length; i++) {
+        if (categories.includes(data[i].categorie) === false) {
+            categories.push(data[i].categorie);
+        }
+    }
+    genererOption();
+}
+
+// creer les option de selection des catégorie
+function genererOption() {
+    for (let i = 0; i < categories.length; i++) {
+        const option = document.createElement("option");
+        option.textContent = categories[i]
+        option.setAttribute("value", categories[i])
+        selectCategorie.appendChild(option);
+    }
+
+}
+
+// selectionne la categorie et genere le mot en fonction
+function selectCat(event, data) {
+    for (let i = 0; i < data.length; i++) {
+        if (event.target.value === data[i].categorie) {
+            let motNormalize = data[i].name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            newMot = motNormalize.toUpperCase()
+        }
+    }
+}
+
+document.addEventListener("keydown", pickLetter)
 fieldText.addEventListener("click", pickLetter);
 liRestart.addEventListener("click", startAgain);
